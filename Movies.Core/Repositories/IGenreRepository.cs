@@ -9,7 +9,7 @@ namespace Movies.Core.Repositories
 {
     public interface IGenreRepository : IRepository<Genre>
     {
-        Task<IAsyncEnumerable<Genre>> GetAllWithMoviesAsync();
-        Task<Genre> GetWithMoviesByIdAsync(int id);
+        Task<IEnumerable<Genre>> GetAllWithMoviesAsync();
+        Task<Genre> GetWithMoviesByIdAsync(Guid id);
     }
 }

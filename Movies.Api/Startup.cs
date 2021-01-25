@@ -4,25 +4,34 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Movies.Core;
+using Movies.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Movies.Api
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.
-                AddDbContext<Integration1CContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("Integration1CContext"))
-            );
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddDbContext<MovieDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("MoviesApi"), x => x.MigrationsAssembly("Movies.Data")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

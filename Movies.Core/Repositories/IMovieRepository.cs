@@ -9,8 +9,8 @@ namespace Movies.Core.Repositories
 {
     public interface IMovieRepository : IRepository<Movie>
     {
-        Task<IAsyncEnumerable<Movie>> GetAllWithGenreAsync();
-        Task<Movie> GetWithGenreByIdAsync(int id);
-        Task<IAsyncEnumerable<Movie>> GetAllWithGenreByGenreIdAsync(int genreId);
+        Task<IEnumerable<Movie>> GetAllWithGenreAsync();
+        Task<Movie> GetWithGenreByIdAsync(Guid id);
+        Task<IEnumerable<Movie>> GetAllWithGenreByGenreIdAsync(Guid genreId);
     }
 }
