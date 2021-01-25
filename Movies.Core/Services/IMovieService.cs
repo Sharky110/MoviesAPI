@@ -1,14 +1,15 @@
 ﻿using Movies.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Movies.Core.Services
 {
-    interface IMovieService
+    public interface IMovieService
     {
-        Task<IAsyncEnumerable<Movie>> GetAllWithGenreAsync();
-        Task<Movie> GetMovieByIdAsync(int id);
-        Task<IAsyncEnumerable<Movie>> GetMoviesByGenreIdAsync(int genreId);
+        Task<IEnumerable<Movie>> GetAllWithGenreAsync();
+        Task<Movie> GetMovieByIdAsync(Guid id);
+        Task<IEnumerable<Movie>> GetMoviesByGenreIdAsync(Guid genreId);
         Task<Movie> CreateMovieAsync(Movie newMovie);
         Task UpdateMovieAsync(Movie movieToBeUpdated, Movie movie);
         Task DeleteMovieAsync(Movie movie);

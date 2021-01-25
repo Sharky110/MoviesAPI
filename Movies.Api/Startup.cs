@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Movies.Services;
+using Movies.Core.Services;
 
 namespace Movies.Api
 {
@@ -32,6 +34,9 @@ namespace Movies.Api
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<MovieDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("MoviesApi"), x => x.MigrationsAssembly("Movies.Data")));
+
+            services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IGenreService, GenreService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

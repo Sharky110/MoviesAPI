@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Movies.Core.Services
 {
-    interface IGenreService
+    public interface IGenreService
     {
         Task<IEnumerable<Genre>> GetAllGenres();
         Task<Genre> GetGenreById(int id);
