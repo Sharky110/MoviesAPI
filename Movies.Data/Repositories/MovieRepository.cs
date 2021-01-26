@@ -17,9 +17,17 @@ namespace Movies.Data.Repositories
 
         public async Task<IEnumerable<Movie>> GetAllWithGenreAsync()
         {
-            return await MovieDbContext.Movies
+            try
+            {
+                return await MovieDbContext.Movies
                 .Include(m => m.Genre)
                 .ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
         public async Task<Movie> GetWithGenreByIdAsync(Guid id)

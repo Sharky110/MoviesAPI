@@ -12,9 +12,9 @@ namespace Movies.Data.Configurations
             builder
                 .HasKey(m => m.Id);
 
-           // builder
-            //    .Property(m => m.Id)
-            //    .UseIdentityColumn();
+        //    builder
+        //        .Property(m => m.Id)
+       //         .UseIdentityColumn();
 
             builder
                 .Property(m => m.Name)
@@ -24,10 +24,10 @@ namespace Movies.Data.Configurations
             builder
                 .HasOne(m => m.Genre)
                 .WithMany(g => g.Movies)
-                .HasForeignKey(m => m.Id);
+                .HasForeignKey(m => m.GenreId);
 
-          //  builder
-           //     .ToTable("Movie");
+            builder
+                .ToTable("Movies");
         }
     }
 }

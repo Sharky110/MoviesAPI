@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Movies.Services;
 using Movies.Core.Services;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
+using AutoMapper;
 
 namespace Movies.Api
 {
@@ -34,9 +37,15 @@ namespace Movies.Api
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddDbContext<MovieDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("MoviesApi"), x => x.MigrationsAssembly("Movies.Data")));
-
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<IGenreService, GenreService>();
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Movies", Version = "v1" });
+            });
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,16 +55,47 @@ namespace Movies.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Movies V1");
+            });
+            //if (env.IsDevelopment())
+            //    app.UseDeveloperExceptionPage();
+
+
+            //app.UseRouting();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapGet("/", async context =>
+            //    {
+            //        await context.Response.WriteAsync("Hello World!");
+            //    });
+            //});
+
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.RoutePrefix = "";
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Movies V1");
+            //});
         }
     }
 }

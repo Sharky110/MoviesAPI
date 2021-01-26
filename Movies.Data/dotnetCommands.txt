@@ -2,3 +2,6 @@
 
 dotnet ef --startup-project Movies.Api/Movies.Api.csproj migrations add InitialModel -p Movies.Data/Movies.Data.csproj - создать снимок БД
 dotnet ef --startup-project MyMusic.Api/MyMusic.Api.csproj database update - 
+
+
+dotnet add MyMusic.Api/MyMusic.Api.csproj package Swashbuckle.AspNetCore --version 5.0.0-rc3 - добавлен Swagger
