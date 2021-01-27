@@ -21,10 +21,11 @@ namespace Movies.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder
-                .HasOne(m => m.Genre)
-                .WithMany(g => g.Movies)
-                .HasForeignKey(m => m.GenreId);
+        //    builder
+         //       .HasMany(m => m.Genres)
+         //       .WithMany(g => g.Movies)
+          //      .UsingEntity(j => j.ToTable("GenreMovie"));
+              //  .HasForeignKey(m => m.GenreId);
 
             builder
                 .ToTable("Movies");

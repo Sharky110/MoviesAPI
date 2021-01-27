@@ -7,16 +7,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Movies.Core;
 using Movies.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Movies.Services;
 using Movies.Core.Services;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
+using System;
 
 namespace Movies.Api
 {
@@ -35,15 +31,19 @@ namespace Movies.Api
         {
             services.AddControllers();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddDbContext<MovieDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("MoviesApi"), x => x.MigrationsAssembly("Movies.Data")));
+
+            services.AddDbContext<MovieDbContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("MoviesApi"), x => x.MigrationsAssembly("Movies.Data"));
+                options.LogTo(Console.WriteLine);
+            });
+
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<IGenreService, GenreService>();
 
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Movies", Version = "v1" });
-            });
+            services.AddSwaggerGen(options => options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Movies", Version = "v1" }));
 
             services.AddAutoMapper(typeof(Startup));
         }
@@ -65,10 +65,7 @@ namespace Movies.Api
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

@@ -12,5 +12,6 @@ namespace Movies.Core.Repositories
         Task<IEnumerable<Movie>> GetAllWithGenreAsync();
         Task<Movie> GetWithGenreByIdAsync(Guid id);
         Task<IEnumerable<Movie>> GetAllWithGenreByGenreIdAsync(Guid genreId);
+        Task<Movie> GetByNameAsync(string name);
     }
 }

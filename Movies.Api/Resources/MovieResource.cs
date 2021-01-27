@@ -9,6 +9,6 @@ namespace Movies.Api.Resources
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public GenreResource Artist { get; set; }
+        public ICollection<GenreResource> Genres { get; set; }
     }
 }

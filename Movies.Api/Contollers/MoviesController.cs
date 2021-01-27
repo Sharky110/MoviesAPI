@@ -14,21 +14,29 @@ namespace Movies.Api.Contollers
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        private readonly IMovieService _musicService;
+        private readonly IMovieService _movieService;
         private readonly IMapper _mapper;
         public MoviesController(IMovieService musicService, IMapper mapper)
         {
             _mapper = mapper;
-            _musicService = musicService;
+            _movieService = musicService;
         }
        
-        [HttpGet("api/movies")]
+        [HttpGet("GetAllWithGenres")]
         public async Task<ActionResult<IEnumerable<Movie>>> GetAllMovies()
         {
-            var movies = await _musicService.GetAllWithGenreAsync();
+            var movies = await _movieService.GetAllWithGenreAsync();
             var movieResources = _mapper.Map<IEnumerable<Movie>, IEnumerable<MovieResource>>(movies);
-
+            
             return Ok(movieResources);
+        }
+
+        [HttpGet("AddGenreToMovie")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetAllMovies(string movieName, string genreName)
+        {
+            await _movieService.AddGenreToMovie(movieName, genreName);
+
+            return Ok("Done.");
         }
     }
 }

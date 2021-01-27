@@ -20,7 +20,7 @@ namespace Movies.Data.Repositories
             try
             {
                 return await MovieDbContext.Movies
-                .Include(m => m.Genre)
+                .Include(m => m.Genres)
                 .ToListAsync();
             }
             catch (Exception)
@@ -33,16 +33,25 @@ namespace Movies.Data.Repositories
         public async Task<Movie> GetWithGenreByIdAsync(Guid id)
         {
             return await MovieDbContext.Movies
-                .Include(m => m.Genre)
-                .SingleOrDefaultAsync(m => m.Id == id); ;
+                .Include(m => m.Genres)
+                .SingleOrDefaultAsync(m => m.Id == id);
         }
 
         public async Task<IEnumerable<Movie>> GetAllWithGenreByGenreIdAsync(Guid genreId)
         {
+            throw new Exception();
+            //return await MovieDbContext.Movies
+            //    .Include(m => m.Genres)
+            //    .Where(m => m.GenreId == genreId)
+            //    .ToListAsync();
+        }
+
+        public async Task<Movie> GetByNameAsync(string name)
+        {
             return await MovieDbContext.Movies
-                .Include(m => m.Genre)
-                .Where(m => m.GenreId == genreId)
-                .ToListAsync();
+                .Include(m => m.Genres)
+                .Where(_ => _.Name == name)
+                .FirstOrDefaultAsync();
         }
 
         private MovieDbContext MovieDbContext

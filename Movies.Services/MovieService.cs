@@ -14,7 +14,7 @@ namespace Movies.Services
         {
             this._unitOfWork = unitOfWork;
         }
-
+               
         public async Task<Movie> CreateMovieAsync(Movie newMovie)
         {
             await _unitOfWork.Movies.AddAsync(newMovie);
@@ -46,12 +46,25 @@ namespace Movies.Services
                 .GetAllWithGenreByGenreIdAsync(genreId);
         }
 
-        public async Task UpdateMovieAsync(Movie musicToBeUpdated, Movie music)
+        public async Task UpdateMovieAsync(Movie movieToBeUpdated, Movie movie)
         {
-            musicToBeUpdated.Name = music.Name;
-            musicToBeUpdated.GenreId = music.GenreId;
+            movieToBeUpdated.Name = movie.Name;
+         //   movieToBeUpdated.GenreId = music.GenreId;
 
             await _unitOfWork.CommitAsync();
         }
+
+        public async Task AddGenreToMovie(string movieName, string genreName)
+        {
+            var genre = new Genre(genreName);
+            
+            await _unitOfWork.Genres.AddAsync(genre);
+            
+            var movie = await _unitOfWork.Movies.GetByNameAsync(movieName);
+            movie.Genres.Add(genre);
+
+            await _unitOfWork.CommitAsync();
+        }
+
     }
 }

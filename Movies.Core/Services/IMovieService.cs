@@ -13,5 +13,6 @@ namespace Movies.Core.Services
         Task<Movie> CreateMovieAsync(Movie newMovie);
         Task UpdateMovieAsync(Movie movieToBeUpdated, Movie movie);
         Task DeleteMovieAsync(Movie movie);
+        Task AddGenreToMovie(string movieName, string genreName);
     }
 }
