@@ -7,7 +7,6 @@ namespace Movies.Api.Resources
 {
     public class GenreResource
     {
-            public Guid Id { get; set; }
             public string Name { get; set; }
     }
 }

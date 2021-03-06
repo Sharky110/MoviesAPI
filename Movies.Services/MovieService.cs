@@ -14,8 +14,8 @@ namespace Movies.Services
         {
             this._unitOfWork = unitOfWork;
         }
-               
-        public async Task<Movie> CreateMovieAsync(Movie newMovie)
+
+        public async Task<Movie> AddMovieAsync(Movie newMovie)
         {
             await _unitOfWork.Movies.AddAsync(newMovie);
             await _unitOfWork.CommitAsync();
@@ -34,7 +34,7 @@ namespace Movies.Services
                 .GetAllWithGenreAsync();
         }
 
-        public async Task<Movie> GetMovieByIdAsync(Guid id)
+        public async Task<Movie> GetMovieById(Guid id)
         {
             return await _unitOfWork.Movies
                 .GetWithGenreByIdAsync(id);
@@ -48,21 +48,28 @@ namespace Movies.Services
 
         public async Task UpdateMovieAsync(Movie movieToBeUpdated, Movie movie)
         {
-            movieToBeUpdated.Name = movie.Name;
-         //   movieToBeUpdated.GenreId = music.GenreId;
-
+            if (!string.IsNullOrEmpty(movie.Name))
+                movieToBeUpdated.Name = movie.Name;
+            if (!string.IsNullOrEmpty(movie.Tagline))
+                movieToBeUpdated.Tagline = movie.Tagline;
+            if (!string.IsNullOrEmpty(movie.Director))
+                movieToBeUpdated.Director = movie.Director;
+            if (!string.IsNullOrEmpty(movie.Country))
+                movieToBeUpdated.Country = movie.Country;
+            if (movie.Release != DateTime.MinValue)
+                movieToBeUpdated.Release = movie.Release;
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task AddGenreToMovie(string movieName, string genreName)
+        public async Task AddGenreToMovieAsync(Movie movie, Genre genre)
         {
-            var genre = new Genre(genreName);
-            
-            await _unitOfWork.Genres.AddAsync(genre);
-            
-            var movie = await _unitOfWork.Movies.GetByNameAsync(movieName);
             movie.Genres.Add(genre);
-
+            await _unitOfWork.CommitAsync();
+        }
+        
+        public async Task RemoveGenreToMovieAsync(Movie movie, Genre genre)
+        {
+            movie.Genres.Remove(genre);
             await _unitOfWork.CommitAsync();
         }
 

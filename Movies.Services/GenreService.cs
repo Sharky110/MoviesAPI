@@ -3,8 +3,6 @@ using Movies.Core.Models;
 using Movies.Core.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Movies.Services
@@ -17,7 +15,7 @@ namespace Movies.Services
             this._unitOfWork = unitOfWork;
         }
 
-        public async Task<Genre> CreateGenre(Genre newGenre)
+        public async Task<Genre> AddGenre(Genre newGenre)
         {
             await _unitOfWork.Genres
                 .AddAsync(newGenre);
@@ -25,9 +23,9 @@ namespace Movies.Services
             return newGenre;
         }
 
-        public async Task DeleteGenre(Genre artist)
+        public async Task DeleteGenre(Genre genre)
         {
-            _unitOfWork.Genres.Remove(artist);
+            _unitOfWork.Genres.Remove(genre);
 
             await _unitOfWork.CommitAsync();
         }
@@ -37,14 +35,14 @@ namespace Movies.Services
             return await _unitOfWork.Genres.GetAllAsync();
         }
 
-        public async Task<Genre> GetGenreById(int id)
+        public async Task<Genre> GetGenreById(Guid id)
         {
             return await _unitOfWork.Genres.GetByIdAsync(id);
         }
 
-        public async Task UpdateGenre(Genre artistToBeUpdated, Genre artist)
+        public async Task UpdateGenre(Genre genreToBeUpdated, Genre genre)
         {
-            artistToBeUpdated.Name = artist.Name;
+            genreToBeUpdated.Name = genre.Name;
 
             await _unitOfWork.CommitAsync();
         }

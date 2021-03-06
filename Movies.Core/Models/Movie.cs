@@ -5,8 +5,10 @@ namespace Movies.Core.Models
 {
     public class Movie
     {
-        public Movie()
+        public Movie() {}
+        public Movie(string name, string tagline, DateTime release, string country, string director)
         {
+            (Name, Tagline, Release, Country, Director) = (name, tagline, release, country, director);
             Genres = new List<Genre>();
         }
         public Guid Id { get; set; }

@@ -10,8 +10,8 @@ namespace Movies.Core.Services
     public interface IGenreService
     {
         Task<IEnumerable<Genre>> GetAllGenres();
-        Task<Genre> GetGenreById(int id);
-        Task<Genre> CreateGenre(Genre newGenre);
+        Task<Genre> GetGenreById(Guid id);
+        Task<Genre> AddGenre(Genre newGenre);
         Task UpdateGenre(Genre genreToBeUpdated, Genre genre);
         Task DeleteGenre(Genre genre);
     }

@@ -8,11 +8,12 @@ namespace Movies.Core.Services
     public interface IMovieService
     {
         Task<IEnumerable<Movie>> GetAllWithGenreAsync();
-        Task<Movie> GetMovieByIdAsync(Guid id);
+        Task<Movie> GetMovieById(Guid id);
         Task<IEnumerable<Movie>> GetMoviesByGenreIdAsync(Guid genreId);
-        Task<Movie> CreateMovieAsync(Movie newMovie);
+        Task<Movie> AddMovieAsync(Movie newMovie);
         Task UpdateMovieAsync(Movie movieToBeUpdated, Movie movie);
         Task DeleteMovieAsync(Movie movie);
-        Task AddGenreToMovie(string movieName, string genreName);
+        Task AddGenreToMovieAsync(Movie movie, Genre genre);
+        Task RemoveGenreToMovieAsync(Movie movie, Genre genre);
     }
 }
