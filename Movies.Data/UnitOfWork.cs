@@ -1,10 +1,6 @@
 ﻿using Movies.Core;
 using Movies.Core.Repositories;
 using Movies.Data.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Movies.Data

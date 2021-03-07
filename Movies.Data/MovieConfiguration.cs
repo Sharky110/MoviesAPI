@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Movies.Core.Models;
-using System;
 
 namespace Movies.Data.Configurations
 {

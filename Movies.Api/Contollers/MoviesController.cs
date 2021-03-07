@@ -39,7 +39,18 @@ namespace Movies.Api.Contollers
             var movieResources = _mapper.Map<IEnumerable<Movie>, IEnumerable<MovieResource>>(movies);
             return Ok(movieResources);
         }
-        
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<FullStudentResource>>> GetStudents(
+            [FromQuery] StudentFilterParameters filterParameters)
+        {
+            var studentDtoes = await _studentService.GetStudentsWithGroupNamesAsync(filterParameters);
+            var studentResources = studentDtoes
+                .Select(dto => _mapper.Map<FullStudentResource>(dto))
+                .ToList();
+            return Ok(studentResources);
+        }
+
         [HttpPost("Add")]
         public async Task<IActionResult> AddMovie([FromBody] MovieResource movieResource)
         {

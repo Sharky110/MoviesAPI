@@ -1,17 +1,17 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
-using Movies.Core;
-using Movies.Data;
-using Microsoft.EntityFrameworkCore;
-using Movies.Services;
-using Movies.Core.Services;
 using Microsoft.OpenApi.Models;
-using AutoMapper;
+using Movies.Core;
+using Movies.Core.Services;
+using Movies.Data;
+using Movies.Services;
 using System;
 
 namespace Movies.Api
